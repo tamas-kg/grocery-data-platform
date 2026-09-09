@@ -6,4 +6,8 @@ from uuid import UUID
 class Vendor:
     vendor_id: UUID
     name: str
-    country: str
+    email: str
+    phone: str
+    city: str
+    postcode: str
+    address: str

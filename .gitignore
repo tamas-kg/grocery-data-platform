@@ -1,2 +1,9 @@
 data
 .venv
+.pytest_cache
+src/grocery/__pycache__
+src/grocery/domain/__pycache__
+src/grocery/generation/__pycache__
+src/grocery/reference_data/__pycache__
+src/grocery/grocery_data_platform.egg-info
+tests/unit/__pycache__

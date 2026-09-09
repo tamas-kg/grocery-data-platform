@@ -6,5 +6,8 @@ from uuid import UUID
 class Store:
     store_id: UUID
     name: str
+    size: str
     city: str
-    country: str
+    postcode: str
+    address: str
+    
