@@ -3,8 +3,7 @@ from uuid import UUID
 
 
 @dataclass(frozen=True)
-class Store:
-    store_id: UUID
+class Vendor:
+    vendor_id: UUID
     name: str
-    city: str
     country: str

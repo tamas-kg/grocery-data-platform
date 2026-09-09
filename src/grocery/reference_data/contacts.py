@@ -1,0 +1,1 @@
+EMAIL_PROVIDERS = ["gmail", "yahoo", "protonmail", "hotmail", "icloud", "outlook"]
