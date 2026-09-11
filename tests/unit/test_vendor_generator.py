@@ -5,6 +5,7 @@ import re
 
 from grocery.generation.vendors import VendorGenerator
 
+
 def test_generation_is_deterministic() -> None:
     generator1 = VendorGenerator(Random(42))
     generator2 = VendorGenerator(Random(42))
@@ -15,6 +16,7 @@ def test_generation_is_deterministic() -> None:
 
     assert vendors_1 == vendors_2
 
+
 def test_different_seeds_produce_different_vendors() -> None:
     generator1 = VendorGenerator(Random(42))
     generator2 = VendorGenerator(Random(43))
@@ -24,6 +26,7 @@ def test_different_seeds_produce_different_vendors() -> None:
 
     assert vendors_1 != vendors_2
 
+
 def test_generates_no_vendors_when_count_is_zero() -> None:
     generator = VendorGenerator(Random(42))
 
@@ -31,11 +34,13 @@ def test_generates_no_vendors_when_count_is_zero() -> None:
 
     assert vendors == []
 
+
 def test_rejects_negative_count() -> None:
     generator = VendorGenerator(Random(42))
 
     with pytest.raises(ValueError):
         list(generator.generate(-1))
+
 
 def test_vendor_emails_are_unique() -> None:
     generator = VendorGenerator(Random(42))
@@ -45,6 +50,7 @@ def test_vendor_emails_are_unique() -> None:
     emails = [customer.email for customer in vendors]
 
     assert len(emails) == len(set(emails))
+
 
 def test_phone_numbers_have_valid_format() -> None:
     generator = VendorGenerator(Random(42))
@@ -58,6 +64,7 @@ def test_phone_numbers_have_valid_format() -> None:
         for customer in vendors
     )
 
+
 def test_emails_have_valid_format() -> None:
     generator = VendorGenerator(Random(42))
 
@@ -68,6 +75,7 @@ def test_emails_have_valid_format() -> None:
         and customer.email.endswith(".com")
         for customer in vendors
     )
+
 
 def test_postcodes_have_six_digits() -> None:
     generator = VendorGenerator(Random(42))

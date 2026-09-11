@@ -4,8 +4,8 @@ from uuid import UUID
 
 
 @dataclass(frozen=True)
-class OrderItem:
-    order_item_id: UUID
+class OrderLine:
+    order_line_id: UUID
     order_id: UUID
     product_id: UUID
     quantity: int

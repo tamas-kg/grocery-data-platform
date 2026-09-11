@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from uuid import UUID
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True)
 class Customer:
     customer_id: UUID
     first_name: str

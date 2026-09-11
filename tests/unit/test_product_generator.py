@@ -1,19 +1,29 @@
-from random import Random
 from decimal import Decimal
+from random import Random
+from uuid import UUID
+
 import pytest
 
 from grocery.generation.products import ProductGenerator
 
 
+VENDOR_IDS = [
+    UUID("550e8400-e29b-41d4-a716-446655440000"),
+    UUID("550e8400-e29b-41d4-a716-446655440001"),
+    UUID("550e8400-e29b-41d4-a716-446655440002"),
+]
+
+
 def test_generates_requested_number_of_products() -> None:
-    generator = ProductGenerator(Random(42))
+    generator = ProductGenerator(Random(42), VENDOR_IDS)
 
     products = list(generator.generate(10))
 
     assert len(products) == 10
 
+
 def test_product_ids_are_unique() -> None:
-    generator = ProductGenerator(Random(42))
+    generator = ProductGenerator(Random(42), VENDOR_IDS)
 
     products = list(generator.generate(100))
 
@@ -21,8 +31,27 @@ def test_product_ids_are_unique() -> None:
 
     assert len(product_ids) == len(set(product_ids))
 
+
+def test_products_reference_existing_vendors() -> None:
+    generator = ProductGenerator(Random(42), VENDOR_IDS)
+
+    products = list(generator.generate(100))
+
+    assert all(
+        product.vendor_id in VENDOR_IDS
+        for product in products
+    )
+
+
+def test_products_reject_empty_vendor_ids() -> None:
+    generator = ProductGenerator(Random(42), [])
+
+    with pytest.raises(ValueError):
+        list(generator.generate(10))
+
+
 def test_products_have_valid_categories() -> None:
-    generator = ProductGenerator(Random(42))
+    generator = ProductGenerator(Random(42), VENDOR_IDS)
 
     products = list(generator.generate(100))
 
@@ -39,8 +68,9 @@ def test_products_have_valid_categories() -> None:
         for product in products
     )
 
+
 def test_product_price_is_greater_than_cost() -> None:
-    generator = ProductGenerator(Random(42))
+    generator = ProductGenerator(Random(42), VENDOR_IDS)
 
     products = list(generator.generate(100))
 
@@ -49,8 +79,9 @@ def test_product_price_is_greater_than_cost() -> None:
         for product in products
     )
 
+
 def test_product_name_belongs_to_category() -> None:
-    generator = ProductGenerator(Random(42))
+    generator = ProductGenerator(Random(42), VENDOR_IDS)
 
     products = list(generator.generate(100))
 
@@ -69,39 +100,42 @@ def test_product_name_belongs_to_category() -> None:
 
 
 def test_generation_is_deterministic() -> None:
-    generator1 = ProductGenerator(Random(42))
-    generator2 = ProductGenerator(Random(42))
-    
+    generator1 = ProductGenerator(Random(42), VENDOR_IDS)
+    generator2 = ProductGenerator(Random(42), VENDOR_IDS)
+
     products_1 = list(generator1.generate(25))
     products_2 = list(generator2.generate(25))
-    print(products_1)
 
     assert products_1 == products_2
 
+
 def test_different_seeds_produce_different_products() -> None:
-    generator1 = ProductGenerator(Random(42))
-    generator2 = ProductGenerator(Random(43))
+    generator1 = ProductGenerator(Random(42), VENDOR_IDS)
+    generator2 = ProductGenerator(Random(43), VENDOR_IDS)
 
     products_1 = list(generator1.generate(25))
     products_2 = list(generator2.generate(25))
 
     assert products_1 != products_2
 
+
 def test_generates_no_products_when_count_is_zero() -> None:
-    generator = ProductGenerator(Random(42))
+    generator = ProductGenerator(Random(42), VENDOR_IDS)
 
     products = list(generator.generate(0))
 
     assert products == []
 
+
 def test_rejects_negative_count() -> None:
-    generator = ProductGenerator(Random(42))
+    generator = ProductGenerator(Random(42), VENDOR_IDS)
 
     with pytest.raises(ValueError):
         list(generator.generate(-1))
 
+
 def test_products_have_valid_brands() -> None:
-    generator = ProductGenerator(Random(42))
+    generator = ProductGenerator(Random(42), VENDOR_IDS)
 
     products = list(generator.generate(100))
 
@@ -117,8 +151,9 @@ def test_products_have_valid_brands() -> None:
         for product in products
     )
 
+
 def test_product_cost_is_within_expected_range() -> None:
-    generator = ProductGenerator(Random(42))
+    generator = ProductGenerator(Random(42), VENDOR_IDS)
 
     products = list(generator.generate(1000))
 
@@ -127,8 +162,9 @@ def test_product_cost_is_within_expected_range() -> None:
         for product in products
     )
 
+
 def test_product_margin_is_within_expected_range() -> None:
-    generator = ProductGenerator(Random(42))
+    generator = ProductGenerator(Random(42), VENDOR_IDS)
 
     products = list(generator.generate(1000))
 

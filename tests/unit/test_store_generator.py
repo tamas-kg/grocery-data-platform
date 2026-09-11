@@ -3,6 +3,7 @@ import pytest
 
 from grocery.generation.stores import StoreGenerator
 
+
 def test_generation_is_deterministic() -> None:
     generator1 = StoreGenerator(Random(42))
     generator2 = StoreGenerator(Random(42))
@@ -13,6 +14,7 @@ def test_generation_is_deterministic() -> None:
 
     assert stores_1 == stores_2
 
+
 def test_different_seeds_produce_different_stores() -> None:
     generator1 = StoreGenerator(Random(42))
     generator2 = StoreGenerator(Random(43))
@@ -22,6 +24,7 @@ def test_different_seeds_produce_different_stores() -> None:
 
     assert stores_1 != stores_2
 
+
 def test_generates_no_stores_when_count_is_zero() -> None:
     generator = StoreGenerator(Random(42))
 
@@ -29,11 +32,13 @@ def test_generates_no_stores_when_count_is_zero() -> None:
 
     assert stores == []
 
+
 def test_rejects_negative_count() -> None:
     generator = StoreGenerator(Random(42))
 
     with pytest.raises(ValueError):
         list(generator.generate(-1))
+
 
 def test_postcodes_have_six_digits() -> None:
     generator = StoreGenerator(Random(42))

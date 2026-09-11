@@ -5,6 +5,7 @@ import re
 
 from grocery.generation.customers import CustomerGenerator
 
+
 def test_generation_is_deterministic() -> None:
     generator1 = CustomerGenerator(Random(42))
     generator2 = CustomerGenerator(Random(42))
@@ -15,6 +16,7 @@ def test_generation_is_deterministic() -> None:
 
     assert customers_1 == customers_2
 
+
 def test_different_seeds_produce_different_customers() -> None:
     generator1 = CustomerGenerator(Random(42))
     generator2 = CustomerGenerator(Random(43))
@@ -24,12 +26,14 @@ def test_different_seeds_produce_different_customers() -> None:
 
     assert customers_1 != customers_2
 
+
 def test_generates_no_customers_when_count_is_zero() -> None:
     generator = CustomerGenerator(Random(42))
 
     customers = list(generator.generate(0))
 
     assert customers == []
+
 
 def test_rejects_negative_count() -> None:
     generator = CustomerGenerator(Random(42))
@@ -46,6 +50,7 @@ def test_customer_emails_are_unique() -> None:
 
     assert len(emails) == len(set(emails))
 
+
 def test_payment_cards_are_unique() -> None:
     generator = CustomerGenerator(Random(42))
 
@@ -54,6 +59,7 @@ def test_payment_cards_are_unique() -> None:
     cards = [customer.payment_card for customer in customers]
 
     assert len(cards) == len(set(cards))
+
 
 def test_phone_numbers_have_valid_format() -> None:
     generator = CustomerGenerator(Random(42))
@@ -67,6 +73,7 @@ def test_phone_numbers_have_valid_format() -> None:
         for customer in customers
     )
 
+
 def test_emails_have_valid_format() -> None:
     generator = CustomerGenerator(Random(42))
 
@@ -77,6 +84,7 @@ def test_emails_have_valid_format() -> None:
         and customer.email.endswith(".com")
         for customer in customers
     )
+
 
 def test_payment_cards_have_valid_format() -> None:
     generator = CustomerGenerator(Random(42))
@@ -89,6 +97,7 @@ def test_payment_cards_have_valid_format() -> None:
         re.match(pattern, customer.payment_card)
         for customer in customers
     )
+
 
 def test_postcodes_have_six_digits() -> None:
     generator = CustomerGenerator(Random(42))
