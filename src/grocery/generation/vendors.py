@@ -46,8 +46,3 @@ class VendorGenerator:
 
     def _generate_digits(self, n:int) -> str:
         return ''.join(str(self._rng.randint(0, 9)) for _ in range(n))
-
-vendor = VendorGenerator(Random(42))
-vendors = vendor.generate(250)
-for v in vendors:
-    print(v.email)

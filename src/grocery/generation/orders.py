@@ -13,10 +13,15 @@ class OrderGenerator:
         rng: Random,
         customer_ids: Sequence[UUID],
         store_ids: Sequence[UUID],
+        start_timestamp: datetime,
+        end_timestamp: datetime
     ) -> None:
         self._rng = rng
         self._customer_ids = customer_ids
         self._store_ids = store_ids
+        self._start_timestamp = start_timestamp
+        self._end_timestamp = end_timestamp
+
 
 
     def generate(self, count: int) -> Iterator[Order]:
@@ -28,15 +33,22 @@ class OrderGenerator:
 
         if not self._store_ids:
             raise ValueError("store_ids must not be empty")
+
+        if self._start_timestamp >= self._end_timestamp:
+            raise ValueError(
+                "start_timestamp must be before end_timestamp"
+            )
+
+        time_range_seconds = int(
+            (self._end_timestamp - self._start_timestamp).total_seconds()
+        )
         
         for _ in range(count):
 
-            start = datetime(2020, 1, 1)
-            end = datetime(2025, 1, 1)
-
-            random_timestamp = start + timedelta(
-                seconds=self._rng.randint(0, int((end - start).total_seconds()))
+            random_timestamp = self._start_timestamp + timedelta(
+                seconds=self._rng.randint(0, time_range_seconds)
             )
+
 
             yield Order(
                 order_id=self._generate_id(),
