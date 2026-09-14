@@ -46,7 +46,7 @@ class OrderGenerator:
         for _ in range(count):
 
             random_timestamp = self._start_timestamp + timedelta(
-                seconds=self._rng.randint(0, time_range_seconds)
+                seconds=self._rng.randrange(time_range_seconds)
             )
 
 
