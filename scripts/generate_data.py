@@ -1,9 +1,7 @@
 import logging
-from pathlib import Path
-from random import Random
 from datetime import datetime
+from pathlib import Path
 
-from grocery.io.parquet import ParquetWriter
 from grocery.pipeline.config import GenerationConfig
 from grocery.pipeline.generate import GroceryDataGenerator
 
@@ -28,12 +26,9 @@ def main() -> None:
         order_end_timestamp=datetime(2024, 2, 1),
     )
 
-    generator = GroceryDataGenerator(
-        rng=Random(42),
-        writer=ParquetWriter(),
-    )
+    generator = GroceryDataGenerator(config)
 
-    generator.run(config)
+    generator.run()
 
 
 if __name__ == "__main__":

@@ -1,5 +1,6 @@
 import logging
 from collections.abc import Iterable
+from typing import Callable
 from dataclasses import asdict
 from datetime import datetime
 from pathlib import Path
@@ -14,11 +15,17 @@ logger = logging.getLogger(__name__)
 
 class ParquetWriter:
 
-    def __init__(self, chunk_size: int = 10_000) -> None:
+    def __init__(self, 
+                 schema: pa.Schema,
+                 chunk_size: int = 10_000,
+                 clock: Callable[[], datetime] = datetime.now
+                 ) -> None:
         if chunk_size <= 0:
             raise ValueError("chunk_size must be positive")
 
+        self._schema = schema
         self._chunk_size = chunk_size
+        self._clock = clock
 
     def write(
         self,
@@ -85,7 +92,7 @@ class ParquetWriter:
         output_path: Path,
         writer: pq.ParquetWriter | None,
     ) -> pq.ParquetWriter:
-        table = pa.Table.from_pylist(rows)
+        table = pa.Table.from_pylist(rows, schema=self._schema)
 
         if writer is None:
             output_path.parent.mkdir(
@@ -95,7 +102,7 @@ class ParquetWriter:
 
             writer = pq.ParquetWriter(
                 output_path,
-                table.schema,
+                self._schema
             )
 
         writer.write_table(table)
@@ -117,9 +124,8 @@ class ParquetWriter:
 
         return row
 
-    @staticmethod
-    def _add_timestamp(output_path: Path) -> Path:
-        timestamp = datetime.now().strftime("%Y%m%dT%H%M%S")
+    def _add_timestamp(self, output_path: Path) -> Path:
+        timestamp = self._clock().strftime("%Y%m%dT%H%M%S")
 
         return output_path.with_name(
             f"{output_path.stem}_{timestamp}{output_path.suffix}"
