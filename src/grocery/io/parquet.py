@@ -1,34 +1,126 @@
+import logging
 from collections.abc import Iterable
 from dataclasses import asdict
+from datetime import datetime
 from pathlib import Path
+from uuid import UUID
 
 import pyarrow as pa
 import pyarrow.parquet as pq
 
 
+logger = logging.getLogger(__name__)
+
+
 class ParquetWriter:
+
+    def __init__(self, chunk_size: int = 10_000) -> None:
+        if chunk_size <= 0:
+            raise ValueError("chunk_size must be positive")
+
+        self._chunk_size = chunk_size
 
     def write(
         self,
         records: Iterable[object],
         output_path: Path,
     ) -> None:
-        rows = []
+        output_path = self._add_timestamp(output_path)
 
-        for record in records:
-            row = asdict(record)
+        logger.info("Writing parquet file: %s", output_path)
 
-            for key, value in row.items():
-                if hasattr(value, "hex"):
-                    row[key] = str(value)
+        iterator = iter(records)
 
-            rows.append(row)
+        try:
+            first_record = next(iterator)
+        except StopIteration:
+            logger.warning(
+                "No records to write: %s",
+                output_path,
+            )
+            return
 
+        writer: pq.ParquetWriter | None = None
+        rows: list[dict[str, object]] = []
+        records_written = 0
+
+        try:
+            rows.append(self._to_row(first_record))
+
+            for record in iterator:
+                rows.append(self._to_row(record))
+
+                if len(rows) >= self._chunk_size:
+                    writer = self._write_chunk(
+                        rows,
+                        output_path,
+                        writer,
+                    )
+
+                    records_written += len(rows)
+                    rows = []
+
+            if rows:
+                writer = self._write_chunk(
+                    rows,
+                    output_path,
+                    writer,
+                )
+
+                records_written += len(rows)
+
+        finally:
+            if writer is not None:
+                writer.close()
+
+        logger.info(
+            "Finished writing %d records to %s",
+            records_written,
+            output_path,
+        )
+
+    def _write_chunk(
+        self,
+        rows: list[dict[str, object]],
+        output_path: Path,
+        writer: pq.ParquetWriter | None,
+    ) -> pq.ParquetWriter:
         table = pa.Table.from_pylist(rows)
 
-        output_path.parent.mkdir(parents=True, exist_ok=True)
+        if writer is None:
+            output_path.parent.mkdir(
+                parents=True,
+                exist_ok=True,
+            )
 
-        pq.write_table(
-            table,
-            output_path,
+            writer = pq.ParquetWriter(
+                output_path,
+                table.schema,
+            )
+
+        writer.write_table(table)
+
+        logger.debug(
+            "Wrote parquet chunk containing %d records",
+            len(rows),
+        )
+
+        return writer
+
+    @staticmethod
+    def _to_row(record: object) -> dict[str, object]:
+        row = asdict(record)
+
+        for key, value in row.items():
+            if isinstance(value, UUID):
+                row[key] = str(value)
+
+        return row
+
+    @staticmethod
+    def _add_timestamp(output_path: Path) -> Path:
+        timestamp = datetime.now().strftime("%Y%m%dT%H%M%S")
+
+        return output_path.with_name(
+            f"{output_path.stem}_{timestamp}{output_path.suffix}"
         )
