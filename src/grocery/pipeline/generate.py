@@ -3,6 +3,8 @@ from collections.abc import Sequence
 from decimal import Decimal
 from pathlib import Path
 from uuid import UUID
+import time
+from concurrent.futures import ThreadPoolExecutor
 
 from grocery.generation.customers import CustomerGenerator
 from grocery.generation.orderlines import OrderLineGenerator
@@ -24,19 +26,41 @@ from grocery.pipeline.config import GenerationConfig
 
 logger = logging.getLogger(__name__)
 
-
 class GroceryDataGenerator:
 
     def __init__(self, config: GenerationConfig) -> None:
         self._config = config
 
     def run(self) -> None:
-        vendors = self._generate_vendors()
-        customers = self._generate_customers()
-        stores = self._generate_stores()
+        start = time.perf_counter()
+
+        with ThreadPoolExecutor(max_workers=3) as executor:
+            vendors_future = executor.submit(
+                self._generate_vendors
+            )
+
+            customers_future = executor.submit(
+                self._generate_customers
+            )
+
+            stores_future = executor.submit(
+                self._generate_stores
+            )
+
+            vendors = vendors_future.result()
+            customers = customers_future.result()
+            stores = stores_future.result()
+
+        # vendors = self._generate_vendors()
+        # customers = self._generate_customers()
+        # stores = self._generate_stores()
         products = self._generate_products(vendors)
         orders = self._generate_orders(customers, stores)
         self._generate_order_lines(orders, products)
+
+        elapsed = time.perf_counter() - start
+
+        logger.info("Generation completed in %.2f seconds", elapsed)
 
     def _generate_vendors(self):
         logger.info("Generating vendors")

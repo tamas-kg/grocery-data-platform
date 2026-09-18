@@ -11,3 +11,4 @@ src/grocery/grocery_data_platform.egg-info
 tests/unit/__pycache__
 tests/unit/generation/__pycache__
 tests/unit/io/__pycache__
+src/grocery/pipeline/__pycache__/generate.cpython-311.pyc
