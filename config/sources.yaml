@@ -1,0 +1,27 @@
+sources:
+  - source_name: orders
+    source_type: file
+    source_format: parquet
+    path_or_table: data/source/orders_*.parquet
+    key_columns:
+      - order_id
+    schema_ref: schemas/orders.json
+    load_type: full
+
+  - source_name: order_lines
+    source_type: file
+    source_format: parquet
+    path_or_table: data/source/order_lines_*.parquet
+    key_columns:
+      - order_line_id
+    schema_ref: schemas/order_lines.json
+    load_type: full
+
+  - source_name: products
+    source_type: file
+    source_format: parquet
+    path_or_table: data/source/products_*.parquet
+    key_columns:
+      - product_id
+    schema_ref: schemas/products.json
+    load_type: full

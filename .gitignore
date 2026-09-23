@@ -12,3 +12,16 @@ tests/unit/__pycache__
 tests/unit/generation/__pycache__
 tests/unit/io/__pycache__
 src/grocery/pipeline/__pycache__/generate.cpython-311.pyc
+scripts/__pycache__/spark_test.cpython-311-pytest-9.1.1.pyc
+src/grocery/config/__pycache__/loader.cpython-311.pyc
+src/grocery/config/__pycache__/models.cpython-311.pyc
+src/grocery/config/__pycache__/__init__.cpython-311.pyc
+src/grocery/pipeline/__pycache__/generate.cpython-311.pyc
+src/grocery/pipeline/__pycache__/generate.cpython-311.pyc
+tests/unit/config/__pycache__/test_loader.cpython-311-pytest-9.1.1.pyc
+tests/unit/config/__pycache__/test_models.cpython-311-pytest-9.1.1.pyc
+src/grocery/spark/__pycache__/session.cpython-311.pyc
+.gitignore
+src/grocery/spark/__pycache__/__init__.cpython-311.pyc
+tests/unit/transformations/__pycache__/test_order_lines.cpython-311-pytest-9.1.1.pyc
+tests/__pycache__/conftest.cpython-311-pytest-9.1.1.pyc
