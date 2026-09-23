@@ -25,3 +25,10 @@ src/grocery/spark/__pycache__/session.cpython-311.pyc
 src/grocery/spark/__pycache__/__init__.cpython-311.pyc
 tests/unit/transformations/__pycache__/test_order_lines.cpython-311-pytest-9.1.1.pyc
 tests/__pycache__/conftest.cpython-311-pytest-9.1.1.pyc
+src/grocery/spark/transformations/__pycache__/order_lines.cpython-311.pyc
+src/grocery/spark/transformations/__pycache__/orders.cpython-311.pyc
+.gitignore
+tests/unit/spark/transformations/__pycache__/test_orders.cpython-311-pytest-9.1.1.pyc
+tests/unit/spark/transformations/__pycache__/test_products.cpython-311-pytest-9.1.1.pyc
+tests/unit/spark/transformations/__pycache__/test_order_lines.cpython-311-pytest-9.1.1.pyc
+src/grocery/spark/transformations/__pycache__/products.cpython-311.pyc
