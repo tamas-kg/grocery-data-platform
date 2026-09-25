@@ -1,0 +1,35 @@
+{
+  "type": "struct",
+  "fields": [
+    {
+      "name": "order_id",
+      "type": "string",
+      "nullable": true,
+      "metadata": {}
+    },
+    {
+      "name": "customer_id",
+      "type": "string",
+      "nullable": true,
+      "metadata": {}
+    },
+    {
+      "name": "store_id",
+      "type": "string",
+      "nullable": true,
+      "metadata": {}
+    },
+    {
+      "name": "order_timestamp",
+      "type": "timestamp",
+      "nullable": true,
+      "metadata": {}
+    },
+    {
+      "name": "status",
+      "type": "string",
+      "nullable": true,
+      "metadata": {}
+    }
+  ]
+}

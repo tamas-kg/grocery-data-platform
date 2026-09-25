@@ -1,0 +1,47 @@
+{
+  "type": "struct",
+  "fields": [
+    {
+      "name": "product_id",
+      "type": "string",
+      "nullable": true,
+      "metadata": {}
+    },
+    {
+      "name": "vendor_id",
+      "type": "string",
+      "nullable": true,
+      "metadata": {}
+    },
+    {
+      "name": "category",
+      "type": "string",
+      "nullable": true,
+      "metadata": {}
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "nullable": true,
+      "metadata": {}
+    },
+    {
+      "name": "brand",
+      "type": "string",
+      "nullable": true,
+      "metadata": {}
+    },
+    {
+      "name": "unit_cost",
+      "type": "decimal(10,2)",
+      "nullable": true,
+      "metadata": {}
+    },
+    {
+      "name": "unit_price",
+      "type": "decimal(10,2)",
+      "nullable": true,
+      "metadata": {}
+    }
+  ]
+}

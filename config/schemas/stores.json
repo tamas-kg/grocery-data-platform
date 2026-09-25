@@ -1,0 +1,41 @@
+{
+  "type": "struct",
+  "fields": [
+    {
+      "name": "store_id",
+      "type": "string",
+      "nullable": true,
+      "metadata": {}
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "nullable": true,
+      "metadata": {}
+    },
+    {
+      "name": "size",
+      "type": "string",
+      "nullable": true,
+      "metadata": {}
+    },
+    {
+      "name": "city",
+      "type": "string",
+      "nullable": true,
+      "metadata": {}
+    },
+    {
+      "name": "postcode",
+      "type": "string",
+      "nullable": true,
+      "metadata": {}
+    },
+    {
+      "name": "address",
+      "type": "string",
+      "nullable": true,
+      "metadata": {}
+    }
+  ]
+}

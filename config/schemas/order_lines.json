@@ -1,0 +1,35 @@
+{
+  "type": "struct",
+  "fields": [
+    {
+      "name": "order_line_id",
+      "type": "string",
+      "nullable": true,
+      "metadata": {}
+    },
+    {
+      "name": "order_id",
+      "type": "string",
+      "nullable": true,
+      "metadata": {}
+    },
+    {
+      "name": "product_id",
+      "type": "string",
+      "nullable": true,
+      "metadata": {}
+    },
+    {
+      "name": "quantity",
+      "type": "long",
+      "nullable": true,
+      "metadata": {}
+    },
+    {
+      "name": "unit_price",
+      "type": "decimal(10,2)",
+      "nullable": true,
+      "metadata": {}
+    }
+  ]
+}

@@ -32,3 +32,7 @@ tests/unit/spark/transformations/__pycache__/test_orders.cpython-311-pytest-9.1.
 tests/unit/spark/transformations/__pycache__/test_products.cpython-311-pytest-9.1.1.pyc
 tests/unit/spark/transformations/__pycache__/test_order_lines.cpython-311-pytest-9.1.1.pyc
 src/grocery/spark/transformations/__pycache__/products.cpython-311.pyc
+src/grocery/config/__pycache__/schema_loader.cpython-311.pyc
+tests/unit/config/__pycache__/test_schema_loader.cpython-311-pytest-9.1.1.pyc
+src/grocery/spark/__pycache__/readers.cpython-311.pyc
+tests/integration/__pycache__/test_readers.cpython-311-pytest-9.1.1.pyc
