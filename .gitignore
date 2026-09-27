@@ -36,3 +36,17 @@ src/grocery/config/__pycache__/schema_loader.cpython-311.pyc
 tests/unit/config/__pycache__/test_schema_loader.cpython-311-pytest-9.1.1.pyc
 src/grocery/spark/__pycache__/readers.cpython-311.pyc
 tests/integration/__pycache__/test_readers.cpython-311-pytest-9.1.1.pyc
+src/grocery/pipelines/__pycache__/__init__.cpython-311.pyc
+src/grocery/pipelines/__pycache__/config.cpython-311.pyc
+src/grocery/pipelines/__pycache__/exceptions.cpython-311.pyc
+src/grocery/pipelines/__pycache__/generate.cpython-311.pyc
+src/grocery/pipelines/__pycache__/ingestion.cpython-311.pyc
+src/grocery/spark/quality/__pycache__/checks.cpython-311.pyc
+src/grocery/spark/quality/__pycache__/models.cpython-311.pyc
+src/grocery/spark/quality/__pycache__/policy.cpython-311.pyc
+src/grocery/spark/quality/__pycache__/validation.cpython-311.pyc
+tests/integration/integration/__pycache__/test_ingestion.cpython-311-pytest-9.1.1.pyc
+tests/unit/pipelines/__pycache__/test_ingesion.cpython-311-pytest-9.1.1.pyc
+tests/unit/spark/quality/__pycache__/test_checks.cpython-311-pytest-9.1.1.pyc
+tests/unit/spark/quality/__pycache__/test_policy.cpython-311-pytest-9.1.1.pyc
+tests/unit/spark/quality/__pycache__/test_validation.cpython-311-pytest-9.1.1.pyc

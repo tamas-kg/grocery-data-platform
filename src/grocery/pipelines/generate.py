@@ -22,7 +22,7 @@ from grocery.io.schemas import (
     STORE_SCHEMA,
     VENDOR_SCHEMA,
 )
-from grocery.pipeline.config import GenerationConfig
+from grocery.pipelines.config import GenerationConfig
 
 logger = logging.getLogger(__name__)
 

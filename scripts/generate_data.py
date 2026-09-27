@@ -2,8 +2,8 @@ import logging
 from datetime import datetime
 from pathlib import Path
 
-from grocery.pipeline.config import GenerationConfig
-from grocery.pipeline.generate import GroceryDataGenerator
+from grocery.pipelines.config import GenerationConfig
+from grocery.pipelines.generate import GroceryDataGenerator
 
 
 logging.basicConfig(
