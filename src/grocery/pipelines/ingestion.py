@@ -80,3 +80,18 @@ def ingest_and_validate_source(
         )
 
     return df
+
+
+def ingest_and_validate_sources(
+    spark: SparkSession,
+    configs: list[SourceConfig],
+    config_dir: Path,
+) -> dict[str, DataFrame]:
+    return {
+        config.source_name: ingest_and_validate_source(
+            spark=spark,
+            config=config,
+            config_dir=config_dir,
+        )
+        for config in configs
+    }

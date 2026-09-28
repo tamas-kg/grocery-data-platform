@@ -50,3 +50,13 @@ tests/unit/pipelines/__pycache__/test_ingesion.cpython-311-pytest-9.1.1.pyc
 tests/unit/spark/quality/__pycache__/test_checks.cpython-311-pytest-9.1.1.pyc
 tests/unit/spark/quality/__pycache__/test_policy.cpython-311-pytest-9.1.1.pyc
 tests/unit/spark/quality/__pycache__/test_validation.cpython-311-pytest-9.1.1.pyc
+src/grocery/pipelines/__pycache__/order_analytics.cpython-311.pyc
+src/grocery/pipelines/__pycache__/product_analytics.cpython-311.pyc
+tests/__pycache__/__init__.cpython-311.pyc
+tests/integration/__pycache__/__init__.cpython-311.pyc
+.gitignore
+.gitignore
+tests/integration/__pycache__/test_app.cpython-311-pytest-9.1.1.pyc
+tests/integration/pipelines/__pycache__/test_product_analytics.cpython-311-pytest-9.1.1.pyc
+tests/integration/pipelines/__pycache__/test_ingestion.cpython-311-pytest-9.1.1.pyc
+tests/unit/pipelines/__pycache__/test_order_analytics.cpython-311-pytest-9.1.1.pyc
