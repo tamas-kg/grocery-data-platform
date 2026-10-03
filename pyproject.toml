@@ -6,7 +6,18 @@ build-backend = "setuptools.build_meta"
 name = "grocery-data-platform"
 version = "0.1.0"
 requires-python = ">=3.11"
-dependencies = ["pyarrow","pyspark","pydantic","pyyaml"]
+dependencies = [
+    "pyarrow",
+    "pydantic>=2",
+    "pyspark",
+    "pyyaml",
+]
+
+[dependency-groups]
+dev = [
+    "pytest",
+    "ruff",
+]
 
 [tool.setuptools.packages.find]
 where = ["src"]

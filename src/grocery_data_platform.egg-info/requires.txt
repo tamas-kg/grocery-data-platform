@@ -1,1 +1,4 @@
 pyarrow
+pydantic>=2
+pyspark
+pyyaml
