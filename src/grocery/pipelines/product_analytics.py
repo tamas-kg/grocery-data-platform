@@ -9,6 +9,4 @@ from grocery.spark.transformations.products import (
 def build_product_analytics(
     products: DataFrame,
 ) -> DataFrame:
-    return calculate_product_margin_percentage(
-        calculate_product_margin(products)
-    )
+    return calculate_product_margin_percentage(calculate_product_margin(products))

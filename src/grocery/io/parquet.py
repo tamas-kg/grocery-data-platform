@@ -1,6 +1,5 @@
 import logging
-from collections.abc import Iterable
-from typing import Callable
+from collections.abc import Callable, Iterable
 from dataclasses import asdict
 from datetime import datetime
 from pathlib import Path
@@ -9,17 +8,16 @@ from uuid import UUID
 import pyarrow as pa
 import pyarrow.parquet as pq
 
-
 logger = logging.getLogger(__name__)
 
 
 class ParquetWriter:
-
-    def __init__(self, 
-                 schema: pa.Schema,
-                 chunk_size: int = 10_000,
-                 clock: Callable[[], datetime] = datetime.now
-                 ) -> None:
+    def __init__(
+        self,
+        schema: pa.Schema,
+        chunk_size: int = 10_000,
+        clock: Callable[[], datetime] = datetime.now,
+    ) -> None:
         if chunk_size <= 0:
             raise ValueError("chunk_size must be positive")
 
@@ -100,10 +98,7 @@ class ParquetWriter:
                 exist_ok=True,
             )
 
-            writer = pq.ParquetWriter(
-                output_path,
-                self._schema
-            )
+            writer = pq.ParquetWriter(output_path, self._schema)
 
         writer.write_table(table)
 

@@ -1,6 +1,8 @@
 from pathlib import Path
+
 import pytest
 from pydantic import ValidationError
+
 from grocery.config.loader import load_sources
 
 
@@ -34,6 +36,7 @@ def test_load_sources(tmp_path: Path):
     assert source.key_columns == ["id"]
     assert source.schema_ref == "schemas/test.json"
     assert source.load_type == "full"
+
 
 def test_load_sources_rejects_invalid_source(tmp_path):
     config_path = tmp_path / "sources.yaml"

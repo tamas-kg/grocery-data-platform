@@ -1,7 +1,7 @@
-from random import Random
-from decimal import Decimal
-import pytest
 import re
+from random import Random
+
+import pytest
 
 from grocery.generation.customers import CustomerGenerator
 
@@ -9,7 +9,7 @@ from grocery.generation.customers import CustomerGenerator
 def test_generation_is_deterministic() -> None:
     generator1 = CustomerGenerator(Random(42))
     generator2 = CustomerGenerator(Random(42))
-    
+
     customers_1 = list(generator1.generate(25))
     customers_2 = list(generator2.generate(25))
     print(customers_1)
@@ -41,6 +41,7 @@ def test_rejects_negative_count() -> None:
     with pytest.raises(ValueError):
         list(generator.generate(-1))
 
+
 def test_customer_emails_are_unique() -> None:
     generator = CustomerGenerator(Random(42))
 
@@ -68,10 +69,7 @@ def test_phone_numbers_have_valid_format() -> None:
 
     pattern = r"^\+44 \d{9}$"
 
-    assert all(
-        re.match(pattern, customer.phone)
-        for customer in customers
-    )
+    assert all(re.match(pattern, customer.phone) for customer in customers)
 
 
 def test_emails_have_valid_format() -> None:
@@ -80,8 +78,7 @@ def test_emails_have_valid_format() -> None:
     customers = list(generator.generate(100))
 
     assert all(
-        "@" in customer.email
-        and customer.email.endswith(".com")
+        "@" in customer.email and customer.email.endswith(".com")
         for customer in customers
     )
 
@@ -93,10 +90,7 @@ def test_payment_cards_have_valid_format() -> None:
 
     pattern = r"^\d{4}-\d{4}-\d{4}-\d{4}$"
 
-    assert all(
-        re.match(pattern, customer.payment_card)
-        for customer in customers
-    )
+    assert all(re.match(pattern, customer.payment_card) for customer in customers)
 
 
 def test_postcodes_have_six_digits() -> None:
@@ -105,7 +99,6 @@ def test_postcodes_have_six_digits() -> None:
     customers = list(generator.generate(100))
 
     assert all(
-        len(customer.postcode) == 6
-        and customer.postcode.isdigit()
+        len(customer.postcode) == 6 and customer.postcode.isdigit()
         for customer in customers
     )

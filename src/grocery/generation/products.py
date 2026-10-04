@@ -4,10 +4,10 @@ from random import Random
 from uuid import UUID
 
 from grocery.domain.product import Product
-from grocery.reference_data.products import CATEGORIES, BRANDS
+from grocery.reference_data.products import BRANDS, CATEGORIES
+
 
 class ProductGenerator:
-
     def __init__(self, rng: Random, vendor_ids: Sequence[UUID]) -> None:
         self._rng = rng
         self._vendor_ids = vendor_ids
@@ -18,7 +18,7 @@ class ProductGenerator:
 
         if not self._vendor_ids:
             raise ValueError("vendor_ids must not be empty")
-        
+
         for _ in range(count):
             category = self._rng.choice(list(CATEGORIES))
             name = self._rng.choice(CATEGORIES[category])

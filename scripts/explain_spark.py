@@ -1,12 +1,9 @@
 from decimal import Decimal
 
-from grocery.spark.session import create_spark_session
-from grocery.spark.transformations.order_lines import (
-    calculate_line_revenue
-)
 from grocery.spark.quality.checks import find_duplicate_keys
+from grocery.spark.session import create_spark_session
+from grocery.spark.transformations.order_lines import calculate_line_revenue
 from grocery.spark.transformations.orders import calculate_order_revenue
-
 
 spark = create_spark_session()
 

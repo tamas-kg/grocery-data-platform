@@ -6,23 +6,21 @@ from uuid import UUID
 from grocery.domain.order import Order
 from grocery.reference_data.orders import ORDER_STATUSES
 
-class OrderGenerator:
 
+class OrderGenerator:
     def __init__(
         self,
         rng: Random,
         customer_ids: Sequence[UUID],
         store_ids: Sequence[UUID],
         start_timestamp: datetime,
-        end_timestamp: datetime
+        end_timestamp: datetime,
     ) -> None:
         self._rng = rng
         self._customer_ids = customer_ids
         self._store_ids = store_ids
         self._start_timestamp = start_timestamp
         self._end_timestamp = end_timestamp
-
-
 
     def generate(self, count: int) -> Iterator[Order]:
         if count < 0:
@@ -35,20 +33,16 @@ class OrderGenerator:
             raise ValueError("store_ids must not be empty")
 
         if self._start_timestamp >= self._end_timestamp:
-            raise ValueError(
-                "start_timestamp must be before end_timestamp"
-            )
+            raise ValueError("start_timestamp must be before end_timestamp")
 
         time_range_seconds = int(
             (self._end_timestamp - self._start_timestamp).total_seconds()
         )
-        
-        for _ in range(count):
 
+        for _ in range(count):
             random_timestamp = self._start_timestamp + timedelta(
                 seconds=self._rng.randrange(time_range_seconds)
             )
-
 
             yield Order(
                 order_id=self._generate_id(),

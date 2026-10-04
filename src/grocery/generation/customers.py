@@ -3,19 +3,19 @@ from random import Random
 from uuid import UUID
 
 from grocery.domain.customer import Customer
-from grocery.reference_data.names import FIRST_NAMES, LAST_NAMES
 from grocery.reference_data.addresses import CITIES, STREETS
 from grocery.reference_data.contacts import EMAIL_PROVIDERS
+from grocery.reference_data.names import FIRST_NAMES, LAST_NAMES
+
 
 class CustomerGenerator:
-
     def __init__(self, rng: Random) -> None:
         self._rng = rng
-        
+
     def generate(self, count: int) -> Iterator[Customer]:
         if count < 0:
             raise ValueError("count must be non-negative")
-        
+
         for _ in range(count):
             first_name = self._rng.choice(FIRST_NAMES)
             last_name = self._rng.choice(LAST_NAMES)
@@ -27,8 +27,10 @@ class CustomerGenerator:
             street = self._rng.choice(STREETS)
             house_number = self._rng.randint(1, 250)
             address = f"{street} {house_number}"
-            card_number = '-'.join(''.join(str(self._rng.randint(0, 9)) for _ in range(4)) for _ in range(4))
-
+            card_number = "-".join(
+                "".join(str(self._rng.randint(0, 9)) for _ in range(4))
+                for _ in range(4)
+            )
 
             yield Customer(
                 customer_id=self._generate_id(),
@@ -39,7 +41,7 @@ class CustomerGenerator:
                 city=city,
                 postcode=self._generate_digits(6),
                 address=address,
-                payment_card=card_number
+                payment_card=card_number,
             )
 
     def _generate_id(self) -> UUID:
@@ -48,6 +50,5 @@ class CustomerGenerator:
             version=4,
         )
 
-    def _generate_digits(self, n:int) -> str:
-        return ''.join(str(self._rng.randint(0, 9)) for _ in range(n))
-
+    def _generate_digits(self, n: int) -> str:
+        return "".join(str(self._rng.randint(0, 9)) for _ in range(n))

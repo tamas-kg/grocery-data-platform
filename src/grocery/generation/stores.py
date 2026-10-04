@@ -3,18 +3,18 @@ from random import Random
 from uuid import UUID
 
 from grocery.domain.store import Store
-from grocery.reference_data.stores import STORE_NAMES, STORE_SIZES
 from grocery.reference_data.addresses import CITIES, STREETS
+from grocery.reference_data.stores import STORE_NAMES, STORE_SIZES
+
 
 class StoreGenerator:
-
     def __init__(self, rng: Random) -> None:
         self._rng = rng
-        
+
     def generate(self, count: int) -> Iterator[Store]:
         if count < 0:
             raise ValueError("count must be non-negative")
-        
+
         for _ in range(count):
             store_name = self._rng.choice(STORE_NAMES)
             store_size = self._rng.choice(STORE_SIZES)
@@ -22,7 +22,6 @@ class StoreGenerator:
             street = self._rng.choice(STREETS)
             house_number = self._rng.randint(1, 250)
             address = f"{street} {house_number}"
-
 
             yield Store(
                 store_id=self._generate_id(),
@@ -39,5 +38,5 @@ class StoreGenerator:
             version=4,
         )
 
-    def _generate_digits(self, n:int) -> str:
-        return ''.join(str(self._rng.randint(0, 9)) for _ in range(n))
+    def _generate_digits(self, n: int) -> str:
+        return "".join(str(self._rng.randint(0, 9)) for _ in range(n))

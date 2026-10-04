@@ -10,4 +10,3 @@ class Store:
     city: str
     postcode: str
     address: str
-    

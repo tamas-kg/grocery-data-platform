@@ -1,7 +1,7 @@
-from random import Random
-from decimal import Decimal
-import pytest
 import re
+from random import Random
+
+import pytest
 
 from grocery.generation.vendors import VendorGenerator
 
@@ -9,7 +9,7 @@ from grocery.generation.vendors import VendorGenerator
 def test_generation_is_deterministic() -> None:
     generator1 = VendorGenerator(Random(42))
     generator2 = VendorGenerator(Random(42))
-    
+
     vendors_1 = list(generator1.generate(25))
     vendors_2 = list(generator2.generate(25))
     print(vendors_1)
@@ -59,10 +59,7 @@ def test_phone_numbers_have_valid_format() -> None:
 
     pattern = r"^\+44 \d{9}$"
 
-    assert all(
-        re.match(pattern, customer.phone)
-        for customer in vendors
-    )
+    assert all(re.match(pattern, customer.phone) for customer in vendors)
 
 
 def test_emails_have_valid_format() -> None:
@@ -71,8 +68,7 @@ def test_emails_have_valid_format() -> None:
     vendors = list(generator.generate(100))
 
     assert all(
-        "@" in customer.email
-        and customer.email.endswith(".com")
+        "@" in customer.email and customer.email.endswith(".com")
         for customer in vendors
     )
 
@@ -83,7 +79,6 @@ def test_postcodes_have_six_digits() -> None:
     vendors = list(generator.generate(100))
 
     assert all(
-        len(customer.postcode) == 6
-        and customer.postcode.isdigit()
+        len(customer.postcode) == 6 and customer.postcode.isdigit()
         for customer in vendors
     )

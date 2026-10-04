@@ -6,7 +6,6 @@ import pytest
 
 from grocery.generation.orders import OrderGenerator
 
-
 CUSTOMER_IDS = [
     UUID("10000000-0000-4000-8000-000000000001"),
     UUID("10000000-0000-4000-8000-000000000002"),
@@ -130,10 +129,7 @@ def test_orders_reference_existing_customers() -> None:
 
     orders = list(generator.generate(100))
 
-    assert all(
-        order.customer_id in CUSTOMER_IDS
-        for order in orders
-    )
+    assert all(order.customer_id in CUSTOMER_IDS for order in orders)
 
 
 def test_orders_reference_existing_stores() -> None:
@@ -147,10 +143,7 @@ def test_orders_reference_existing_stores() -> None:
 
     orders = list(generator.generate(100))
 
-    assert all(
-        order.store_id in STORE_IDS
-        for order in orders
-    )
+    assert all(order.store_id in STORE_IDS for order in orders)
 
 
 def test_order_ids_are_unique() -> None:
@@ -181,8 +174,7 @@ def test_orders_have_valid_timestamps_and_statuses() -> None:
     orders = list(generator.generate(100))
 
     assert all(
-        START_TIMESTAMP <= order.order_timestamp < END_TIMESTAMP
-        for order in orders
+        START_TIMESTAMP <= order.order_timestamp < END_TIMESTAMP for order in orders
     )
 
     assert all(order.status for order in orders)

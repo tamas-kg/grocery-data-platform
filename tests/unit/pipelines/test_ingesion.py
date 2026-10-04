@@ -1,12 +1,10 @@
-from pyspark.sql import SparkSession
-
-from grocery.config.models import SourceConfig
-from grocery.pipelines.ingestion import validate_source
-
 from pathlib import Path
 from unittest.mock import patch
 
-from grocery.pipelines.ingestion import ingest_and_validate_sources
+from pyspark.sql import SparkSession
+
+from grocery.config.models import SourceConfig
+from grocery.pipelines.ingestion import ingest_and_validate_sources, validate_source
 
 
 def test_validate_source_returns_no_failures(
@@ -66,8 +64,7 @@ def test_validate_source_returns_key_failures(
     )
 
     failures_by_name = {
-        failure.check_name: failure.violation_count
-        for failure in failures
+        failure.check_name: failure.violation_count for failure in failures
     }
 
     assert failures_by_name == {

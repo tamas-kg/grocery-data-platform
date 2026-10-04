@@ -188,7 +188,7 @@ VENDOR_NAMES = [
     "Evergreen Fields",
     "Goldenfield",
     "Hillside Valley",
-    "Meadowvale"
+    "Meadowvale",
 ]
 
 VENDOR_MODIFIERS = [
@@ -244,5 +244,5 @@ VENDOR_MODIFIERS = [
     "Food Traders",
     "Food Merchants",
     "Producers",
-    "Distributors"
+    "Distributors",
 ]

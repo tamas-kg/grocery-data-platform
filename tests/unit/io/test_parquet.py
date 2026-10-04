@@ -10,7 +10,6 @@ from grocery.domain.product import Product
 from grocery.io.parquet import ParquetWriter
 from grocery.io.schemas import PRODUCT_SCHEMA
 
-
 FIXED_TIMESTAMP = datetime(2026, 9, 14, 12, 30, 45)
 
 
@@ -20,12 +19,8 @@ def fixed_clock() -> datetime:
 
 def make_product(product_number: int = 1) -> Product:
     return Product(
-        product_id=UUID(
-            f"550e8400-e29b-41d4-a716-4466554400{product_number:02d}"
-        ),
-        vendor_id=UUID(
-            "550e8400-e29b-41d4-a716-446655440000"
-        ),
+        product_id=UUID(f"550e8400-e29b-41d4-a716-4466554400{product_number:02d}"),
+        vendor_id=UUID("550e8400-e29b-41d4-a716-446655440000"),
         category="Dairy",
         name="Milk",
         brand="FreshMart",
@@ -125,9 +120,7 @@ def test_serializes_uuid_as_string(
 
     table = pq.read_table(get_output_file(tmp_path))
 
-    assert table["product_id"].to_pylist() == [
-        str(product.product_id)
-    ]
+    assert table["product_id"].to_pylist() == [str(product.product_id)]
 
 
 def test_preserves_decimal_values(
@@ -147,24 +140,15 @@ def test_preserves_decimal_values(
 
     table = pq.read_table(get_output_file(tmp_path))
 
-    assert table["unit_cost"].to_pylist() == [
-        Decimal("1.50")
-    ]
+    assert table["unit_cost"].to_pylist() == [Decimal("1.50")]
 
-    assert table["unit_price"].to_pylist() == [
-        Decimal("2.00")
-    ]
+    assert table["unit_price"].to_pylist() == [Decimal("2.00")]
 
 
 def test_creates_parent_directories(
     tmp_path: Path,
 ) -> None:
-    output_path = (
-        tmp_path
-        / "nested"
-        / "data"
-        / "products.parquet"
-    )
+    output_path = tmp_path / "nested" / "data" / "products.parquet"
 
     writer = ParquetWriter(
         schema=PRODUCT_SCHEMA,
@@ -176,12 +160,7 @@ def test_creates_parent_directories(
         output_path,
     )
 
-    assert (
-        tmp_path
-        / "nested"
-        / "data"
-        / "products_20260914T123045.parquet"
-    ).exists()
+    assert (tmp_path / "nested" / "data" / "products_20260914T123045.parquet").exists()
 
 
 def test_filename_contains_generation_timestamp(
@@ -197,10 +176,7 @@ def test_filename_contains_generation_timestamp(
         tmp_path / "products.parquet",
     )
 
-    expected = (
-        tmp_path
-        / "products_20260914T123045.parquet"
-    )
+    expected = tmp_path / "products_20260914T123045.parquet"
 
     assert expected.exists()
 

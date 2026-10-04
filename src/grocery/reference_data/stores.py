@@ -1,4 +1,5 @@
-STORE_NAMES = ["Sunrise Market",
+STORE_NAMES = [
+    "Sunrise Market",
     "Sunset Market",
     "Morning Market",
     "Golden Basket",

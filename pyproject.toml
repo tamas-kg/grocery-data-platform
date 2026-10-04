@@ -21,3 +21,18 @@ dev = [
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+[tool.ruff.lint]
+select = [
+    "E",
+    "F",
+    "I",
+    "UP",
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["grocery"]

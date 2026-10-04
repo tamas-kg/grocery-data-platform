@@ -3,7 +3,7 @@ from random import Random
 
 
 def create_rng(seed: int, name: str) -> Random:
-    value = f"{seed}:{name}".encode("utf-8")
+    value = f"{seed}:{name}".encode()
 
     digest = hashlib.sha256(value).digest()
 

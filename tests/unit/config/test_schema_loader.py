@@ -1,12 +1,7 @@
 import json
 from pathlib import Path
 
-from pyspark.sql.types import (
-    DecimalType,
-    LongType,
-    StringType,
-    StructType
-)
+from pyspark.sql.types import DecimalType, LongType, StringType, StructType
 
 from grocery.config.schema_loader import load_spark_schema
 

@@ -4,7 +4,9 @@ from pyspark.sql import SparkSession
 from pyspark.testing.utils import assertDataFrameEqual
 
 from grocery.spark.transformations.products import (
-    calculate_product_margin, calculate_product_margin_percentage)
+    calculate_product_margin,
+    calculate_product_margin_percentage,
+)
 
 
 def test_calculate_product_margin(spark: SparkSession) -> None:

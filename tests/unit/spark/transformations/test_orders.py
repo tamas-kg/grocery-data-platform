@@ -39,12 +39,12 @@ def test_calculate_order_revenue(spark: SparkSession) -> None:
     )
 
     expected_df = spark.createDataFrame(
-    [
-        ("order-1", "customer-1", Decimal("12.00")),
-        ("order-2", "customer-2", Decimal("6.00")),
-        ("order-3", "customer-3", None),
-    ],
-    schema="""
+        [
+            ("order-1", "customer-1", Decimal("12.00")),
+            ("order-2", "customer-2", Decimal("6.00")),
+            ("order-3", "customer-3", None),
+        ],
+        schema="""
         order_id string,
         customer_id string,
         order_revenue decimal(31,2)

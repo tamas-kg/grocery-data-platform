@@ -14,11 +14,13 @@ from grocery.spark.transformations.order_lines import calculate_line_revenue
 
 
 def test_calculate_line_revenue(spark: SparkSession) -> None:
-    input_schema = StructType([
-        StructField("order_line_id", StringType(), False),
-        StructField("quantity", IntegerType(), False),
-        StructField("unit_price", DecimalType(10, 2), False),
-    ])
+    input_schema = StructType(
+        [
+            StructField("order_line_id", StringType(), False),
+            StructField("quantity", IntegerType(), False),
+            StructField("unit_price", DecimalType(10, 2), False),
+        ]
+    )
 
     input_df = spark.createDataFrame(
         [

@@ -6,7 +6,6 @@ import pytest
 
 from grocery.generation.products import ProductGenerator
 
-
 VENDOR_IDS = [
     UUID("550e8400-e29b-41d4-a716-446655440000"),
     UUID("550e8400-e29b-41d4-a716-446655440001"),
@@ -37,10 +36,7 @@ def test_products_reference_existing_vendors() -> None:
 
     products = list(generator.generate(100))
 
-    assert all(
-        product.vendor_id in VENDOR_IDS
-        for product in products
-    )
+    assert all(product.vendor_id in VENDOR_IDS for product in products)
 
 
 def test_products_reject_empty_vendor_ids() -> None:
@@ -63,10 +59,7 @@ def test_products_have_valid_categories() -> None:
         "Snacks",
     }
 
-    assert all(
-        product.category in valid_categories
-        for product in products
-    )
+    assert all(product.category in valid_categories for product in products)
 
 
 def test_product_price_is_greater_than_cost() -> None:
@@ -74,10 +67,7 @@ def test_product_price_is_greater_than_cost() -> None:
 
     products = list(generator.generate(100))
 
-    assert all(
-        product.unit_price > product.unit_cost
-        for product in products
-    )
+    assert all(product.unit_price > product.unit_cost for product in products)
 
 
 def test_product_name_belongs_to_category() -> None:
@@ -93,10 +83,7 @@ def test_product_name_belongs_to_category() -> None:
         "Snacks": {"Chips", "Chocolate", "Cookies", "Nuts"},
     }
 
-    assert all(
-        product.name in valid_products[product.category]
-        for product in products
-    )
+    assert all(product.name in valid_products[product.category] for product in products)
 
 
 def test_generation_is_deterministic() -> None:
@@ -146,10 +133,7 @@ def test_products_have_valid_brands() -> None:
         "Premium Foods",
     }
 
-    assert all(
-        product.brand in valid_brands
-        for product in products
-    )
+    assert all(product.brand in valid_brands for product in products)
 
 
 def test_product_cost_is_within_expected_range() -> None:
@@ -158,8 +142,7 @@ def test_product_cost_is_within_expected_range() -> None:
     products = list(generator.generate(1000))
 
     assert all(
-        Decimal("0.50") <= product.unit_cost <= Decimal("10.00")
-        for product in products
+        Decimal("0.50") <= product.unit_cost <= Decimal("10.00") for product in products
     )
 
 
@@ -169,8 +152,6 @@ def test_product_margin_is_within_expected_range() -> None:
     products = list(generator.generate(1000))
 
     assert all(
-        Decimal("0.10")
-        <= product.unit_price - product.unit_cost
-        <= Decimal("5.00")
+        Decimal("0.10") <= product.unit_price - product.unit_cost <= Decimal("5.00")
         for product in products
     )

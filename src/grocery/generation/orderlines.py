@@ -1,12 +1,12 @@
-from collections.abc import Iterator, Sequence, Mapping
+from collections.abc import Iterator, Mapping, Sequence
 from decimal import Decimal
 from random import Random
 from uuid import UUID
 
 from grocery.domain.orderline import OrderLine
 
-class OrderLineGenerator:
 
+class OrderLineGenerator:
     def __init__(
         self,
         rng: Random,
@@ -17,7 +17,6 @@ class OrderLineGenerator:
         self._order_ids = order_ids
         self._product_prices = product_prices
 
-
     def generate(self, count: int) -> Iterator[OrderLine]:
         if count < 0:
             raise ValueError("count must be non-negative")
@@ -27,7 +26,7 @@ class OrderLineGenerator:
 
         if not self._product_prices:
             raise ValueError("product_prices must not be empty")
-        
+
         for _ in range(count):
             product_id = self._rng.choice(list(self._product_prices))
 

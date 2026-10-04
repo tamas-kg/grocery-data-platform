@@ -9,7 +9,4 @@ def load_sources(path: Path) -> list[SourceConfig]:
     with path.open() as file:
         config = yaml.safe_load(file)
 
-    return [
-        SourceConfig.model_validate(source)
-        for source in config["sources"]
-    ]
+    return [SourceConfig.model_validate(source) for source in config["sources"]]

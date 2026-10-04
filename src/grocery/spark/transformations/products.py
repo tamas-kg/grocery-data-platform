@@ -14,7 +14,6 @@ def calculate_product_margin_percentage(df: DataFrame) -> DataFrame:
         "margin_percentage",
         F.when(
             F.col("unit_price") != 0,
-            (F.col("unit_price") - F.col("unit_cost"))
-            / F.col("unit_price"),
+            (F.col("unit_price") - F.col("unit_cost")) / F.col("unit_price"),
         ).otherwise(F.lit(0.0)),
     )

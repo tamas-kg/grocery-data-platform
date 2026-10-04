@@ -6,7 +6,6 @@ import pytest
 
 from grocery.generation.orderlines import OrderLineGenerator
 
-
 ORDER_IDS = [
     UUID("30000000-0000-4000-8000-000000000001"),
     UUID("30000000-0000-4000-8000-000000000002"),
@@ -109,10 +108,7 @@ def test_order_lines_reference_existing_orders() -> None:
 
     lines = list(generator.generate(100))
 
-    assert all(
-        line.order_id in ORDER_IDS
-        for line in lines
-    )
+    assert all(line.order_id in ORDER_IDS for line in lines)
 
 
 def test_order_lines_reference_existing_products() -> None:
@@ -124,10 +120,7 @@ def test_order_lines_reference_existing_products() -> None:
 
     lines = list(generator.generate(100))
 
-    assert all(
-        line.product_id in PRODUCT_PRICES
-        for line in lines
-    )
+    assert all(line.product_id in PRODUCT_PRICES for line in lines)
 
 
 def test_order_line_uses_product_price() -> None:
@@ -139,10 +132,7 @@ def test_order_line_uses_product_price() -> None:
 
     lines = list(generator.generate(100))
 
-    assert all(
-        line.unit_price == PRODUCT_PRICES[line.product_id]
-        for line in lines
-    )
+    assert all(line.unit_price == PRODUCT_PRICES[line.product_id] for line in lines)
 
 
 def test_order_line_ids_are_unique() -> None:

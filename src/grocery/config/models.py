@@ -17,13 +17,9 @@ class SourceConfig(BaseModel):
     @model_validator(mode="after")
     def validate_load_config(self) -> "SourceConfig":
         if self.load_type == "incremental" and not self.watermark_column:
-            raise ValueError(
-                "watermark_column is required for incremental sources"
-            )
+            raise ValueError("watermark_column is required for incremental sources")
 
         if self.load_type == "cdc" and not self.key_columns:
-            raise ValueError(
-                "key_columns are required for CDC sources"
-            )
+            raise ValueError("key_columns are required for CDC sources")
 
         return self

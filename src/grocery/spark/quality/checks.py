@@ -18,8 +18,4 @@ def find_duplicate_keys(
     df: DataFrame,
     key_columns: list[str],
 ) -> DataFrame:
-    return (
-        df.groupBy(*key_columns)
-        .count()
-        .filter(F.col("count") > 1)
-    )
+    return df.groupBy(*key_columns).count().filter(F.col("count") > 1)

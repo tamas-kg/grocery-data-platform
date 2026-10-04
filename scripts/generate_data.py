@@ -5,7 +5,6 @@ from pathlib import Path
 from grocery.pipelines.config import GenerationConfig
 from grocery.pipelines.generate import GroceryDataGenerator
 
-
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s | %(levelname)s | %(name)s | %(message)s",

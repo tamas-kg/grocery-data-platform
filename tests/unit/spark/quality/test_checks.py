@@ -1,8 +1,7 @@
 from pyspark.sql import SparkSession
 from pyspark.testing.utils import assertDataFrameEqual
 
-from grocery.spark.quality.checks import find_null_keys
-from grocery.spark.quality.checks import find_duplicate_keys
+from grocery.spark.quality.checks import find_duplicate_keys, find_null_keys
 
 
 def test_find_null_keys(spark: SparkSession) -> None:

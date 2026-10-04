@@ -10,13 +10,10 @@ def read_source(
     schema: StructType,
 ) -> DataFrame:
     if config.source_type != "file":
-        raise ValueError(
-            f"Unsupported source type: {config.source_type}"
-        )
+        raise ValueError(f"Unsupported source type: {config.source_type}")
 
     return (
-        spark.read
-        .format(config.source_format)
+        spark.read.format(config.source_format)
         .schema(schema)
         .load(config.path_or_table)
     )

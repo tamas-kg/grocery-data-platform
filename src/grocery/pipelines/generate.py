@@ -1,8 +1,4 @@
 import logging
-from collections.abc import Sequence
-from decimal import Decimal
-from pathlib import Path
-from uuid import UUID
 import time
 from concurrent.futures import ThreadPoolExecutor
 
@@ -26,8 +22,8 @@ from grocery.pipelines.config import GenerationConfig
 
 logger = logging.getLogger(__name__)
 
-class GroceryDataGenerator:
 
+class GroceryDataGenerator:
     def __init__(self, config: GenerationConfig) -> None:
         self._config = config
 
@@ -35,17 +31,11 @@ class GroceryDataGenerator:
         start = time.perf_counter()
 
         with ThreadPoolExecutor(max_workers=3) as executor:
-            vendors_future = executor.submit(
-                self._generate_vendors
-            )
+            vendors_future = executor.submit(self._generate_vendors)
 
-            customers_future = executor.submit(
-                self._generate_customers
-            )
+            customers_future = executor.submit(self._generate_customers)
 
-            stores_future = executor.submit(
-                self._generate_stores
-            )
+            stores_future = executor.submit(self._generate_stores)
 
             vendors = vendors_future.result()
             customers = customers_future.result()
@@ -69,9 +59,7 @@ class GroceryDataGenerator:
             rng=create_rng(self._config.seed, "vendors"),
         )
 
-        vendors = list(
-            generator.generate(self._config.vendor_count)
-        )
+        vendors = list(generator.generate(self._config.vendor_count))
 
         ParquetWriter(
             schema=VENDOR_SCHEMA,
@@ -89,9 +77,7 @@ class GroceryDataGenerator:
             rng=create_rng(self._config.seed, "customers"),
         )
 
-        customers = list(
-            generator.generate(self._config.customer_count)
-        )
+        customers = list(generator.generate(self._config.customer_count))
 
         ParquetWriter(
             schema=CUSTOMER_SCHEMA,
@@ -109,9 +95,7 @@ class GroceryDataGenerator:
             rng=create_rng(self._config.seed, "stores"),
         )
 
-        stores = list(
-            generator.generate(self._config.store_count)
-        )
+        stores = list(generator.generate(self._config.store_count))
 
         ParquetWriter(
             schema=STORE_SCHEMA,
@@ -125,19 +109,14 @@ class GroceryDataGenerator:
     def _generate_products(self, vendors):
         logger.info("Generating products")
 
-        vendor_ids = [
-            vendor.vendor_id
-            for vendor in vendors
-        ]
+        vendor_ids = [vendor.vendor_id for vendor in vendors]
 
         generator = ProductGenerator(
             rng=create_rng(self._config.seed, "products"),
             vendor_ids=vendor_ids,
         )
 
-        products = list(
-            generator.generate(self._config.product_count)
-        )
+        products = list(generator.generate(self._config.product_count))
 
         ParquetWriter(
             schema=PRODUCT_SCHEMA,
@@ -151,15 +130,9 @@ class GroceryDataGenerator:
     def _generate_orders(self, customers, stores):
         logger.info("Generating orders")
 
-        customer_ids = [
-            customer.customer_id
-            for customer in customers
-        ]
+        customer_ids = [customer.customer_id for customer in customers]
 
-        store_ids = [
-            store.store_id
-            for store in stores
-        ]
+        store_ids = [store.store_id for store in stores]
 
         generator = OrderGenerator(
             rng=create_rng(self._config.seed, "orders"),
@@ -169,9 +142,7 @@ class GroceryDataGenerator:
             end_timestamp=self._config.order_end_timestamp,
         )
 
-        orders = list(
-            generator.generate(self._config.order_count)
-        )
+        orders = list(generator.generate(self._config.order_count))
 
         ParquetWriter(
             schema=ORDER_SCHEMA,
@@ -185,14 +156,10 @@ class GroceryDataGenerator:
     def _generate_order_lines(self, orders, products) -> None:
         logger.info("Generating order lines")
 
-        order_ids = [
-            order.order_id
-            for order in orders
-        ]
+        order_ids = [order.order_id for order in orders]
 
         product_prices = {
-            product.product_id: product.unit_price
-            for product in products
+            product.product_id: product.unit_price for product in products
         }
 
         generator = OrderLineGenerator(
@@ -201,9 +168,7 @@ class GroceryDataGenerator:
             product_prices=product_prices,
         )
 
-        order_lines = generator.generate(
-            self._config.order_line_count
-        )
+        order_lines = generator.generate(self._config.order_line_count)
 
         ParquetWriter(
             schema=ORDER_LINE_SCHEMA,

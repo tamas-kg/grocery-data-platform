@@ -1,13 +1,13 @@
 import json
 from pathlib import Path
+
 import pytest
 from pyspark.sql import SparkSession
 from pyspark.testing.utils import assertDataFrameEqual
 
 from grocery.config.models import SourceConfig
-from grocery.pipelines.ingestion import ingest_source
 from grocery.pipelines.exceptions import DataQualityError
-from grocery.pipelines.ingestion import ingest_and_validate_source
+from grocery.pipelines.ingestion import ingest_and_validate_source, ingest_source
 
 
 def test_ingest_source(

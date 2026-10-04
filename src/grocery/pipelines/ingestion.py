@@ -4,11 +4,11 @@ from pyspark.sql import DataFrame, SparkSession
 
 from grocery.config.models import SourceConfig
 from grocery.config.schema_loader import load_spark_schema
-from grocery.spark.readers import read_source
+from grocery.pipelines.exceptions import DataQualityError
 from grocery.spark.quality.models import QualityFailure
 from grocery.spark.quality.policy import evaluate_checks
 from grocery.spark.quality.validation import validate_keys
-from grocery.pipelines.exceptions import DataQualityError
+from grocery.spark.readers import read_source
 
 
 def ingest_source(
@@ -24,6 +24,7 @@ def ingest_source(
         config=config,
         schema=schema,
     )
+
 
 def ingest_sources(
     spark: SparkSession,
@@ -70,8 +71,7 @@ def ingest_and_validate_source(
 
     if failures:
         failure_summary = ", ".join(
-            f"{failure.check_name}={failure.violation_count}"
-            for failure in failures
+            f"{failure.check_name}={failure.violation_count}" for failure in failures
         )
 
         raise DataQualityError(
