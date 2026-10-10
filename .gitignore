@@ -102,3 +102,8 @@ src/grocery_data_platform.egg-info/PKG-INFO
 src/grocery_data_platform.egg-info/requires.txt
 src/grocery_data_platform.egg-info/requires.txt
 src/grocery_data_platform.egg-info/SOURCES.txt
+scripts/__pycache__/databricks_test.cpython-311-pytest-9.1.1.pyc
+scripts/__pycache__/databricks_transform_test.cpython-311-pytest-9.1.1.pyc
+src/grocery/spark/__pycache__/__init__.cpython-312.pyc
+src/grocery/spark/transformations/__pycache__/order_lines.cpython-312.pyc
+.gitignore
