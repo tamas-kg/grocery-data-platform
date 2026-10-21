@@ -1,0 +1,61 @@
+artifacts:
+  grocery:
+    type: whl
+    build: uv build --wheel
+    path: .
+
+bundle:
+  name: grocery-data-platform
+
+workspace:
+  profile: dev
+
+targets:
+  dev:
+    mode: development
+    default: true
+
+resources:
+  jobs:
+    grocery_pipeline:
+      name: grocery-medallion-pipeline
+
+      tasks:
+        - task_key: bronze
+          spark_python_task:
+            python_file: ./scripts/run_bronze.py
+            parameters:
+              - --config
+              - ${workspace.file_path}/config/sources_databricks.yaml
+              - --execution-mode
+              - databricks
+          environment_key: default
+
+        - task_key: silver
+          depends_on:
+            - task_key: bronze
+          spark_python_task:
+            python_file: ./scripts/run_silver.py
+            parameters:
+              - --config
+              - ${workspace.file_path}/config/sources_databricks.yaml
+              - --execution-mode
+              - databricks
+          environment_key: default
+
+        - task_key: gold
+          depends_on:
+            - task_key: silver
+          spark_python_task:
+            python_file: ./scripts/run_gold.py
+            parameters:
+              - --execution-mode
+              - databricks
+          environment_key: default
+
+      environments:
+        - environment_key: default
+          spec:
+            environment_version: "6"
+            dependencies:
+              - ${workspace.artifact_path}/.internal/grocery_data_platform-0.1.0-py3-none-any.whl

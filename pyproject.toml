@@ -58,4 +58,8 @@ known-first-party = ["grocery"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = ["--import-mode=importlib"]
+addopts = ["--import-mode=importlib", "-m", "not databricks"]
+
+markers = [
+    "databricks: tests requiring Databricks Connect and a remote workspace"
+]
